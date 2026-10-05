@@ -16,5 +16,15 @@ void setup() {
 }
 
 void loop() {
-    // Logic will be added here
+    int potValue = analogRead(POT_PIN);
+    unsigned long highTimeUs = map(potValue, 0, 4095, 0, PWM_PERIOD_US);
+    
+    unsigned long currentMicros = micros();
+    unsigned long currentPhase = currentMicros % PWM_PERIOD_US;
+    
+    if (currentPhase < highTimeUs) {
+        digitalWrite(MOTOR_PIN, HIGH);
+    } else {
+        digitalWrite(MOTOR_PIN, LOW);
+    }
 }
